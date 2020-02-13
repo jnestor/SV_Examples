@@ -19,11 +19,11 @@
 //-----------------------------------------------------------------------------
 
 module rate_enb(input logic clk, rst, clr, output logic enb_out);
-   parameter ENB_RATE = 100;  // desired rate in Hz (change as needed)
+   parameter RATE_HZ = 100;  // desired rate in Hz (change as needed)
    parameter CLKFREQ = 100_000_000;  // Nexys4 clock
    localparam DIVAMT = (CLKFREQ / ENB_RATE);
    localparam DIVBITS = $clog2(DIVAMT);   // enough bits to represent DIVAMT
-   
+
    logic [DIVBITS-1:0] q;
 
    assign enb_out = (q == DIVAMT-1);
@@ -31,11 +31,5 @@ module rate_enb(input logic clk, rst, clr, output logic enb_out);
    always_ff @(posedge clk)
      if (rst || clr || enb_out) q <= '0;
      else q <= q + 1;
-   
+
 endmodule // rate_enb
-
-
-
-
-   
-  
