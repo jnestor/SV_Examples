@@ -16,7 +16,7 @@
 // 13.02.2020 : created
 //-----------------------------------------------------------------------------
 
-  module mem2p_sw_sr #(parameter W=8, D=128, localparam DW=$clog2(D))
+module mem2p_sw_sr #(parameter W=8, D=128, localparam DW=$clog2(D))
     (
     input logic clk,
     input logic we1,
