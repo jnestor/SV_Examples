@@ -15,7 +15,7 @@
 module sync_fifo #(parameter WIDTH=8, DEPTH=4)
   (input logic clk, rst, push, pop,
    input logic [WIDTH-1:0] din,
-   output logic [DEPTH-1:0] dout,
+   output logic [WIDTH-1:0] dout,
    output logic full, empty);
 
   localparam ADRW = $clog2(DEPTH);  // address size in bits
@@ -24,10 +24,10 @@ module sync_fifo #(parameter WIDTH=8, DEPTH=4)
   // break out MSB, RAM addresses from wp, rp
   logic [ADRW-1:0] wpaddr, rpaddr;
   logic wpmsb, rpmsb;
-  assign wpaddr = wp[ADRW-1:0]
+  assign wpaddr = wp[ADRW-1:0];
   assign wpmsb = wp[ADRW];
   assign rpaddr = rp[ADRW-1:0];
-  assign prmsb = rp[ADRW];
+  assign rpmsb = rp[ADRW];
 
   logic wp_inc_en, rp_inc_en;
 
