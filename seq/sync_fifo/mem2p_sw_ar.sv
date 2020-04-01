@@ -9,14 +9,14 @@
 //-----------------------------------------------------------------------------
 // Description :
 // Two-port memory with a single clock, a synchronous write port
-// and a synchronous read port.  This will synthesize as blocki
+// and an asynchronous read port.  This will synthesize as distributed
 // RAM in a Xilinx FPGA
 //------------------------------------------------------------------------------
 // Modification history :
 // 13.02.2020 : created
 //-----------------------------------------------------------------------------
 
-module mem2p_sw_sr #(parameter W=8, D=128, localparam DW=$clog2(D))
+  module mem2p_sw_ar #(parameter W=8, D=128, localparam DW=$clog2(D))
     (
     input logic clk,
     input logic we1,
@@ -31,7 +31,6 @@ module mem2p_sw_sr #(parameter W=8, D=128, localparam DW=$clog2(D))
   always_ff @(posedge clk)
     if (we1) ram_array[addr1] = din1;
 
-  always_ff @(posedge clk)
-    dout2 = ram_array[addr2];
+  assign dout2 = ram_array[addr2];
 
 endmodule
