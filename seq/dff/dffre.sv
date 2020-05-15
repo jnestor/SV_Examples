@@ -1,4 +1,4 @@
-// dffe - d flip-flop with synchronous reset & enable
+// dffre - d flip-flop with synchronous reset & enable
 
 module #dffre (input logic clk, d, enb
              output logic q);
