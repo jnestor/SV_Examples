@@ -29,6 +29,7 @@ module counter_rc_tb #(parameter CLKPD=100)
     #(CLKPD);
     enb = 1;  // observed resumed count
     #(CLKPD*2);
+    $display("Simulation complete");
     $stop;
   end
 

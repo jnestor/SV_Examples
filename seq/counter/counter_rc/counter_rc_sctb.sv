@@ -1,4 +1,4 @@
-// stimulus-only testbench for ripple counter
+// self-checking testbench for ripple counter
 
 module counter_rc_sctb #(parameter CLKPD=100)
         (input logic clk,
@@ -8,17 +8,17 @@ module counter_rc_sctb #(parameter CLKPD=100)
 
   int errcount = 0;
 
-  task check(logic [3:0] exp_q, logic exp_cy, int req)
+  task check(logic [3:0] exp_q, logic exp_cy, int req);
      if (q != exp_q)
        begin
-         $display("%t error testing requirement: %d expected q=%h actual q=%h",
-                  req, exp_q, q);
+         $display("%t error testing requirement: %0d expected q=%h actual q=%h",
+                  $time, req, exp_q, q);
          errcount++;
        end
     if (cy != exp_cy)
       begin
-        $display("%t error testing requirement: %d expected q=%h actual q=%h",
-                 req, exp_q, q);
+        $display("%t error testing requirement: %0d expected cy=%h actual cy=%h",
+                 $time, req, exp_q, q);
         errcount++;
       end
    endtask: check
@@ -38,9 +38,9 @@ module counter_rc_sctb #(parameter CLKPD=100)
     #(CLKPD/2);
     check(15, 0, 4);  // check if ripple carry deasserted when enb=0
     enb = 1;
-    #(CLKPD/2;
+    #(CLKPD/2);
     check(0, 0, 1); // check counter rollover
-    #(CLKPD(2));
+    #(CLKPD*2);
     check(2, 0, 1); // check increment
     enb = 0;
     #(CLKPD);
@@ -49,9 +49,11 @@ module counter_rc_sctb #(parameter CLKPD=100)
     #(CLKPD);
     check(3, 0, 1);  // check no count when disabled
     rst = 1;
+    #(CLKPD);
     check(0, 0, 2);  // check if reset has priority over enable
-    $display("Simulation complete %d errors", errcount);
+    check(15, 1, 0); // intentional error message
+    $display("Simulation complete - %0d errors", errcount);
     $stop;
   end
 
-endmodule: counter_rc_tb
+endmodule: counter_rc_sctb
