@@ -1,10 +1,14 @@
 // dffre - d flip-flop with synchronous reset & enable
 
 module #dffre (input logic clk, d, enb
-             output logic q);
+               output logic q);
 
-   always_ff @(posedge clk)
-     if (rst) q = 0;
-     else if (enb) q <= d;
+    always_ff @(posedge clk)
+        if (rst) begin
+            q <= 0;
+        end
+        else if (enb) begin
+            q <= d;
+        end
 
-endmodule
+endmodule: dffre

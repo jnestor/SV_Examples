@@ -1,14 +1,25 @@
 // timer - count down to a deadline
 
 module timer(input logic clk, rst, start,
-               output logic done);
+             output logic done);
 
- logic [4:0] q;
+    parameter DEADLINE = 100;
+    localparam DW = $clog2(DELAY);
 
- assign done (q == 0);
+    logic [W-1:0] q;
 
- always_ff @(posedge clk)
-    if (rst) q <= 0;
-    else if (start) q <= 4'd10;
-    else if (!done) q <= q - 1;
-endmodule
+    assign done = (q == '0);
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            q <= '0;
+        end
+        else if (start) begin
+            q <= DEADLINE - 1;
+        end
+        else if (!done) begin
+            q <= q - 1;
+        end
+    end
+
+endmodule: timer

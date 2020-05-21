@@ -3,8 +3,12 @@
 module dffra (input logic clk, d, rst
              output logic q);
 
-   always_ff @(posedge clk or posedge rst)
-     if (rst) q <= 0;
-     else q <= d;
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            q <= 0;
+        end
+        else begin
+            q <= d;
+        end
 
-endmodule
+endmodule: dffra
