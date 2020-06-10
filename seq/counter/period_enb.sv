@@ -33,12 +33,8 @@ module period_enb(input logic clk, rst, clr, output logic enb_out);
 
     assign enb_out = (q == PERIOD_COUNT_LIMIT - 1);
 
-    always_ff @(posedge clk) begin
-        if (rst || clr || enb_out) begin
-            q <= 0;
-        end
-        else begin
-            q <=  q + 1;
-        end
+    always_ff @(posedge clk)
+        if (rst || clr || enb_out) q <= 0;
+        else                       q <=  q + 1;
 
 endmodule: period_enb

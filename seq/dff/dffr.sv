@@ -3,7 +3,7 @@ module dffr (input logic clk, d, rst
 
     always_ff @(posedge clk) begin
         if (rst) q <= 0;
-        else q <= d;
+        else     q <= d;
     end
 
 endmodule
