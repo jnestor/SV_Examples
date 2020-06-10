@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+ 226ns error testing requirement: 5 expected q=f actual q=0
+ 226ns error testing requirement: 5 expected cy=1 actual cy=0
+Simulation complete - 2 errors

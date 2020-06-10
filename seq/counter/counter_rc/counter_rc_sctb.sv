@@ -15,8 +15,8 @@ module counter_rc_sctb #(parameter CLKPD=100)
            errcount++;
         end
         if (cy != exp_cy) begin
-            $display("%t error testing requirement: %0d expected cy=%h actual cy=%h",
-                     $time, req, exp_q, q);
+            $display("%t error testing requirement: %0d expected cy=%b actual cy=%b",
+                     $time, req, exp_cy, cy);
             errcount++;
         end
     endtask: check
@@ -49,7 +49,7 @@ module counter_rc_sctb #(parameter CLKPD=100)
         rst = 1;
         #(CLKPD);
         check(0, 0, 2);  // check if reset has priority over enable
-        check(15, 1, 0); // intentional error message
+        check(15, 1, 5); // intentional error message
         $display("Simulation complete - %0d errors", errcount);
         $stop;
     end
