@@ -13,5 +13,6 @@ module clk_gen (output logic clk);
         forever begin
             #(CLKPD/2) clk = ~clk;
         end
+    end
 
 endmodule: clk_gen

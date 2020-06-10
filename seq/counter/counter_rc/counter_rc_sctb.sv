@@ -19,9 +19,6 @@ module counter_rc_sctb #(parameter CLKPD=100)
                      $time, req, exp_q, q);
             errcount++;
         end
-        if (goomba) begin
-             
-        end
     endtask: check
 
     initial begin
