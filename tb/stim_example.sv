@@ -2,7 +2,7 @@
 // example to illustrate race condition in sequential circui
 //
 
-module race_tb;
+module stim_example;
 
     logic clk, d1, q1, d2, q2, d3, q3;
 
@@ -15,11 +15,11 @@ module race_tb;
     dff DUV3 (.clk, .d(d3), .q(q3));
 
     initial begin
-        d1 = 0;
-        @(posege clk) #1;
-        d1 = 1;
+        d1 <= 0;
         @(posedge clk) #1;
-        d1 = 0;
+        d1 <= 1;
+        @(posedge clk) #1;
+        d1 <= 0;
         @(posedge clk) #1;
     end
 
@@ -42,4 +42,4 @@ module race_tb;
         $stop;
     end
 
-endmodule: race_tb
+endmodule: stim_example
