@@ -16,18 +16,30 @@ module race_tb;
 
     initial begin
         d1 = 0;
-        d2 <= 0;
-        #1 d3 = 0;
-        @(posedge clk);
+        @(posege clk) #1;
         d1 = 1;
-        d2 <= 1;
-        #1 d3 = 1;
-        @(posedge clk);
+        @(posedge clk) #1;
         d1 = 0;
+        @(posedge clk) #1;
+    end
+
+    initial begin
         d2 <= 0;
-        #1 d3 = 0;
+        @(posedge clk);
+        d2 <= 1;
+        @(posedge clk);
+        d2 <= 0;
+        @(posedge clk);
+    end
+
+    initial begin
+        d3 = 0;
+        @(posedge clk);
+        d3 = 1;
+        @(posedge clk);
+        d3 = 0;
         @(posedge clk);
         $stop;
     end
-    
+
 endmodule: race_tb
