@@ -1,5 +1,13 @@
-// Simple clock generator for simulation.  Instantiate with the
-// desired value of CLKPD in time units.
+//-----------------------------------------------------------------------------
+// Module Name   : clk_gen
+// Project       : RTL Hardware Design and Verification using SystemVerilog
+//-----------------------------------------------------------------------------
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Jun 2020
+//-----------------------------------------------------------------------------
+// Description   : Clock generator for simulation with a testbench
+// Instantiate with the desired clock period (must be multiple of 2)
+//-----------------------------------------------------------------------------
 
 module clk_gen (output logic clk);
     parameter CLKPD = 10;

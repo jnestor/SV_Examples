@@ -3,7 +3,7 @@
 // Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
 // File          : mem2p_sw_ar.sv
-// Author        : John Nestor  <nestorj@nestorj-mbpro-15.home>
+// Author        : John Nestor  <nestorj@lafayette.edu>
 // Created       : 13.02.2020
 // Last modified : 13.02.2020
 //-----------------------------------------------------------------------------
@@ -11,9 +11,6 @@
 // Two-port memory with a single clock, a synchronous write port
 // and an asynchronous read port.  This will synthesize as distributed
 // RAM in a Xilinx FPGA
-//------------------------------------------------------------------------------
-// Modification history :
-// 13.02.2020 : created
 //-----------------------------------------------------------------------------
 
   module mem2p_sw_ar #(parameter W=8, D=128, localparam DW=$clog2(D))

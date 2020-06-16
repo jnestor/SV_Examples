@@ -1,4 +1,12 @@
-// dff - basic d flip-flop
+//-----------------------------------------------------------------------------
+// Module Name   : dff
+// Project       : RTL Hardware Design and Verification using SystemVerilog
+//-----------------------------------------------------------------------------
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Feb 2020
+//-----------------------------------------------------------------------------
+// Description   : d flip-flop
+//-----------------------------------------------------------------------------
 
 module dff (input logic clk, d,
             output logic q);
