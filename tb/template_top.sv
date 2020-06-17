@@ -1,19 +1,24 @@
 //-----------------------------------------------------------------------------
-// Module Name   : counter
+// Module Name   : template_top
 // Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
 // Author        : John Nestor  <nestorj@lafayette.edu>
 // Created       : Jun 2020
 //-----------------------------------------------------------------------------
-// Description   : Basic binary counter with enable & sync. reset
+// Description   : Template for top-level simulation file
 //-----------------------------------------------------------------------------
 
-module  counter (#parameter W=4)
-                (input logic clk, rst, enb,
-                 output logic [W-1:0] q);
+module template_top;
 
-    always_ff @(posedge clk)
-        if (rst)      q <= '0;
-        else if (enb) q <= q + 1;
+    logic clk, rst;
+    // add signals to connect testbench to DUV
 
-endmodule: counter
+    parameter CLKPD = 10;
+
+    clk_gen #(.CLKPD(CLKPD)) CG (.clk);
+
+    template_duv DUV (.clk, .rst /* add connections */ );
+
+    template_tb #(.CLKPD(CLKPD)) TB (.clk, .rst /* add connections */ );
+
+endmodule: template_top

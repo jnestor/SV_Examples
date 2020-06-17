@@ -16,7 +16,7 @@ module clk_gen (output logic clk);
         assert(CLKPD >= 2) else
             $fatal("clk_gen: CLKPD must be at least 2!");
         assert(CLKPD[0] == 0) else
-            $fatal("clk_gen: odd CLKPD must be an even number!");
+            $fatal("clk_gen: CLKPD must be an even number!");
         clk = 0;
         forever begin
             #(CLKPD/2) clk = ~clk;

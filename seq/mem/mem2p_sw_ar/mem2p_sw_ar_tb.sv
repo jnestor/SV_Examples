@@ -3,7 +3,7 @@
 // Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
 // File          : mem2p_sw_ar.sv
-// Author        : John Nestor  <nestorj@nestorj-mbpro-15.home>
+// Author        : John Nestor  <nestorj@lafayette.edu>
 // Created       : 13.02.2020
 // Last modified : 13.02.2020
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ module mem2p_sw_ar_tb;
   initial begin
     $monitor("time=%t we1=%b addr1=%h din1=%h addr2=%h dout2=%h",
              $time, we1, addr1, din1, addr2, dout2);
-             
+
     we1 = 0;
     addr1 = 4'd0;
     din1 = 8'd0;
