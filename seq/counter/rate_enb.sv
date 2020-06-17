@@ -1,12 +1,11 @@
 //-----------------------------------------------------------------------------
-// Title         : rate_enb - parameterized clock enable generator
-// Project       : ECE 212 - Digital Circuits II
+// Module Name   : rate_enb
+// Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
-// File          : rate_enb.sv
-// Author        : John Nestor
-// Created       : 01.12.2019
-// Last modified : 01.12.2019
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Jun 2020
 //-----------------------------------------------------------------------------
+// Description   : Parameterized clock enable generator-
 // Description :
 // This module generates a enable signal that is asserted for one clock
 // cycle at a periodic rate specified by ENB_RATE.  Note that this circuit
@@ -31,5 +30,5 @@ module rate_enb(input logic clk, rst, clr, output logic enb_out);
     always_ff @(posedge clk)
         if (rst || clr || enb_out) q <= '0;
         else                       q <= q + 1;
-      
+
 endmodule: rate_enb

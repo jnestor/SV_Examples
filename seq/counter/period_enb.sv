@@ -1,13 +1,11 @@
 //-----------------------------------------------------------------------------
-// Title         : PERIOD_COUNT_BITS_enb - parameterized clock enable generator
-// Project       : ECE 212 - Digital Circuits II
+// Module Name   : period_enb
+// Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
-// File          : PERIOD_enb.sv
-// Author        : John Nestor
-// Created       : 01.06.2019
-// Last modified : 02.12.2020
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Jun 2020
 //-----------------------------------------------------------------------------
-// Description :
+// Description   : Parameterized clock enable generator
 // This module generates a periodic  enable signal that is asserted for one clock
 // cycle after a parameterized period that can be specified in terms of
 // milliseconds (PERIOD_MS), microseconds (PERIOD_US), or nanoseconds (PERIOD_NS).

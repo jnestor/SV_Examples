@@ -1,4 +1,12 @@
-// timer - count down to a deadline
+//-----------------------------------------------------------------------------
+// Module Name   : timer
+// Project       : RTL Hardware Design and Verification using SystemVerilog
+//-----------------------------------------------------------------------------
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Jun 2020
+//-----------------------------------------------------------------------------
+// Description   : timer - counts down to a parameterized deadline
+//-----------------------------------------------------------------------------
 
 module timer(input logic clk, rst, start,
              output logic done);
