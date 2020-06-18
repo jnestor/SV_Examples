@@ -27,7 +27,7 @@ module fifo_xb #(parameter WIDTH=8, DEPTH=4)
   logic wp_inc_en, rp_inc_en;
 
   mem2p_sw_ar #(.W(WIDTH), .D(DEPTH)) U_RAM
-               (.clk, .we1(wp_inc_en), .din1(din), .addr1(2p),
+               (.clk, .we1(wp_inc_en), .din1(din), .addr1(wp),
                 .addr2(rp), .dout2(dout));
 
   assign empty =  (wraddr == rdaddr) && (wp[ADDRW] == rp[ADDRW]);

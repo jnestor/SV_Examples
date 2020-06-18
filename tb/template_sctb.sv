@@ -26,7 +26,7 @@ module template_sctb ( input logic clk, rst /* , add connections */  );
 
     task report_errors;
         if (errcount == 0) $display("Testbench PASSED");
-        else $display("Testbench FAILED with %d errors");
+        else $display("Testbench FAILED with %d errors", errcount);
     endtask: report_errors
 
     // transaction tasks
