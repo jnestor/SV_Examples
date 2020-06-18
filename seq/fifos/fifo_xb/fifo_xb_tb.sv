@@ -144,10 +144,12 @@ module fifo_xb_tb
         // try to dequeue an empty FIFO
         dequeue_fifo();
         check_empty(1);
-        // add and remove 1 item again
+        // enqueue 1 item, then enqueue & dequeue simultaneously
         @(posedge clk) #1;
         enqueue_fifo(8'h51);
         check(8'h51, 0, 0); 
+        enqueue_dequeue_fifo(8'h61);
+        check(8'h61, 0, 0);
         dequeue_fifo();
         check_empty(1);
         @(posedge clk) #1;
