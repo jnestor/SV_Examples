@@ -14,14 +14,23 @@ module template_tb ( input logic clk, rst /* , add connections */  );
     initial begin
         $timeformat(-9, 0, "ns", 6);
         $monitor( /* add signals to monitor in console */ );
+
+        // add assignment statements to initialize DUV inupts
+
+        // reset DUV
         rst = 1;
         @(posedge clk) #1;
         rst = 0;
 
-       // add procedural statements here --
-       //  -- assignment statemets to drive DUV inputs
-       //  -- timing control statements to sequence
+       // add assignment statements to update DUV inputs
 
+       // add timing control statements to delay
+
+       // add assignment statements to update DUV inputs
+
+       //  add timing control to delay, etc.
+
+       $display("Simulation complete");
        $stop;  // suspend simulation (use $finish to exit)
     end
 

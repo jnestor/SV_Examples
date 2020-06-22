@@ -1,0 +1,58 @@
+//-----------------------------------------------------------------------------
+// Module Name   : mealy
+// Project       : RTL Hardware Design and Verification using SystemVerilog
+//-----------------------------------------------------------------------------
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Feb 2020
+//-----------------------------------------------------------------------------
+// Description   : Mealy FSM that recognizes the input sequence '1011'
+//-----------------------------------------------------------------------------
+
+module moore_3a( input logic clk, rst, output logic rdy,
+	            output logic ack, outen );
+
+    typedef logic [1:0] enum {
+        WTC=2'd0, AKC=2'd1, T1=2'd2, T2=2'd3
+    } states_t;
+
+    states_t state, next;
+
+    always_ff @(posedge clk)
+        if (rst) state <= WTC;
+        else     state <= next;
+
+    always_comb begin   // next state logic
+  	next = WTC; // default: return to WTC on error
+	  unique case (state)
+	    WTC:
+	      if (cmd)  next = AKC;
+	      else      next = WTC;
+	    AKC:
+	      if (!cmd) next = T1;
+	      else      next = AKC;
+	    T1:         next = T2;
+	    T2:         next = WTC;
+	  endcase
+    end
+
+    always_ff @(posedge clk) // registered output logic
+	      if (rst) begin
+	          rdy <= 1'd0;
+	          ack <= 1'd0;
+	          outen <= 1'd0;
+	      end
+	      else begin
+	          rdy <= 1'd0;
+	          ack <= 1'd0;
+	          outen <= 1'd0;
+	          case (next) // selects on NEXT state
+	              WTC: rdy <= 1'b1;
+	              AKC: begin
+		                ack <= 1;
+		                outen <= 1;
+	              end
+	             T1: outen <= 1'b1;
+	          endcase
+	      end
+
+endmodule: moore_3a

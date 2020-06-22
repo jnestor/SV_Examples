@@ -10,8 +10,8 @@ module counter_rc_tb #(parameter CLKPD=100)
         $timeformat(-9, 0, "ns", 6);
         $monitor("time=%t rst=%b enb=%b q=%h cy=%b",
                   $time, rst, enb, q, cy);
-        rst = 1;  // initial reset
         enb = 0;
+        rst = 1;  // initial reset
         @(posedge clk) #1;  // resume 1 time unit after clock edge
         rst = 0;
         #(CLKPD);
