@@ -1,4 +1,4 @@
-module fifo_xb_tb
+module fifo_sr_tb
   #(parameter CLKPD=10, WIDTH=8, DEPTH=4)
    (output logic clk, rst,
     output logic enqueue, dequeue,
@@ -156,4 +156,4 @@ module fifo_xb_tb
         report_errors;
         $stop;
     end
-endmodule: fifo_xb_tb
+endmodule: fifo_sr_tb

@@ -11,12 +11,12 @@ module fifo_sr_elmt #(parameter WIDTH=8)
             full <= 0;
         end
         else if ((enqueue && !dequeue && !full && full_r) ||
-                 (enqueue && dequeue && full && !full_l ) begin
-            dout <= din;
+                 (enqueue && dequeue && full && !full_l )) begin
+            dout <= di_global;
             full <= 1;
         end
         else if (dequeue && full) begin
-            dout <= din_l;
+            dout <= di_l;
             full <= full_l;
         end
 
