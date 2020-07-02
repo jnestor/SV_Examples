@@ -23,7 +23,7 @@ module fifo_xb_top;
     clk_gen #(.CLKPD(CLKPD)) CG (.clk);
 
     fifo_xb  #(.WIDTH(WIDTH), .DEPTH(DEPTH)) DUV
-                 (.clk, .rst, .enqueue, .dequeue,
+              (.clk, .rst, .enqueue, .dequeue,
                   .din, .dout, .full, .empty);
 
     fifo_xb_tb #(.CLKPD(CLKPD), .WIDTH(WIDTH), .DEPTH(DEPTH)) TB

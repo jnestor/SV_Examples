@@ -21,6 +21,11 @@ module counter_rc_sctb #(parameter CLKPD=100)
         end
     endtask: check
 
+    task report_errors;
+        if (errcount == 0) $display("Testbench PASSED");
+        else $display("Testbench FAILED with %d errors");
+    endtask: report_errors
+
     // transaction tasks
 
     task reset_duv;
@@ -58,11 +63,6 @@ module counter_rc_sctb #(parameter CLKPD=100)
         @(posedge clk) #1;
         check (q_start, 0);
     endtask
-
-    task report_errors;
-        if (errcount == 0) $display("Testbench PASSED");
-        else $display("Testbench FAILED with %d errors");
-    endtask: report_errors
 
     initial begin
         $timeformat(-9, 0, "ns", 6);

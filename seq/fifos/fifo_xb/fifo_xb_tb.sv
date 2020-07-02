@@ -54,15 +54,10 @@ module fifo_xb_tb
         rst <= 0;
     endtask
 
-    task idle_fifo;
-        din <= 0;
-        enqueue <= 0;
-        dequeue <= 0;
-    endtask: idle_fifo
-
     task enqueue_fifo(input logic [WIDTH-1:0] data);
         din <= data;
         enqueue <= 1;
+        dequeue <= 0;
         @(posedge clk) #1;
         din <= 0;
         enqueue <= 0;
@@ -70,6 +65,7 @@ module fifo_xb_tb
 
     task dequeue_fifo();
         dequeue <= 1;
+        enqueue <= 0;
         @(posedge clk) #1;
         dequeue <= 0;
     endtask: dequeue_fifo
@@ -151,6 +147,28 @@ module fifo_xb_tb
         enqueue_dequeue_fifo(8'h61);
         check(8'h61, 0, 0);
         dequeue_fifo();
+        check_empty(1);
+        @(posedge clk) #1;
+        // try simultaneous enqueue/dequeue on an empty FIFO
+        enqueue_dequeue_FIFO(8'h71);
+        check(8'h71, 0, 0);
+        dequeue_fifo();
+        check_empty(1);
+        // try simultaneous enqueue/dequeue on a full FIFO
+        enqueue_fifo(8'h81);
+        enqueue_fifo(8'h82);
+        enqueue_fifo(8'h83);
+        enqueue_fifo(8'h84);
+        check(8'h81, 0, 1);
+        enqueue_dequeue_fifo(8'h85);
+        check(8'h82, 0, 1);
+        dequeue_fifo;
+        check(8'h83, 0, 0);
+        dequeue_fifo;
+        check(8'h84, 0, 0);
+        dequeue_fifo;
+        check(8'h85, 0, 0);
+        dequeue_fifo;
         check_empty(1);
         @(posedge clk) #1;
         report_errors;
