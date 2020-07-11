@@ -1,4 +1,4 @@
-module fifo_xb_tb
+module fifo_tb
   #(parameter CLKPD=10, WIDTH=8, DEPTH=4)
    (output logic clk, rst,
     output logic enqueue, dequeue,
@@ -9,8 +9,6 @@ module fifo_xb_tb
     int errcount = 0;
 
     task check_empty(input logic exp_empty);
-        $display("%t expected empty=%b actual %b",
-                 $time, exp_empty, empty);
         if (empty !== exp_empty) begin
             $display("%t error expected empty=%b actual %b",
                      $time, exp_empty, empty);
@@ -34,7 +32,7 @@ module fifo_xb_tb
         end
     endtask: check_dout
 
-    task check(input logic [WIDTH-1:0] exp_dout, logic exp_empty, logic exp_full);
+    task check(input logic [WIDTH-1:0] exp_dout, input logic exp_empty, input logic exp_full);
         check_empty(exp_empty);
         check_full(exp_full);
         check_dout(exp_dout);
@@ -97,53 +95,61 @@ module fifo_xb_tb
 
     // enqueue the FIFO up to its depth, then dequeue each item
     task fill_and_empty;
+        int i;
+        automatic int stval= 8'h41;
         $display("testcase: fill_and_empty");
-        int i, stval= 8'h41;
         while (!empty) dequeue_fifo();
-        // fill the queue with increasing integers
-        for (i=stval; i<=stval+DEPTH; i++) begin
-            logic [WIDTH-1:0]
+        // fill queue with increasing integers one short of full
+        for (i=stval; i<stval+DEPTH-1; i++) begin
             enqueue_fifo(i);
-            if (i<stval+DEPTH) check(stval,0,0);
-            else check (stval,0,1); // should be full here
+            check(stval,0,0);
         end
-        // empth the queue, checking values
-        for (i=stval; i <= stval+DEPTH; i++) begin
+        enqueue_fifo(i);  // this should fill it u!
+        check(stval, 0, 1);
+        // remove DEPTH-1 items
+        for (i=stval; i < stval+DEPTH-1; i++) begin
             dequeue_fifo;
-            if (i<stval+DEPTH) check(i+1,0,0);
-            else check_empty(1);
+            check(i+1,0,0);
         end
+        dequeue_fifo;  // should be the last item!
+        check_empty(1);
     endtask: fill_and_empty
 
     // fill the queue, then attempt to enqueue additional data
     // then empty the queue checking the contents are still correct
     task overfill_and_empty;
-        $display("testcase: overfill_and_empty");
-        int i, stval= 8'h51;
+        int i;
+        automatic int stval= 8'h51;
+         $display("testcase: overfill_and_empty");
         while (!empty) dequeue_fifo();
-        // fill the queue with increasing integers
-        for (i=stval; i<=stval+DEPTH; i++) begin
+        // add DEPTH-1 increasing integers to queue
+        for (i=stval; i<stval+DEPTH-1; i++) begin
             enqueue_fifo(i);
-            if (i<stval+DEPTH) check(stval,0,0);
-            else check (stval,0,1); // should be full here
+            check(stval,0,0);
         end
+        enqueue_fifo(i++);  // add last item
+        check (stval,0,1); 
         // now try to enqueue two more values
-        enqueue_fifo(stval+DEPTH+1;
+        enqueue_fifo(i++);
         check(stval,0,1);
-        enqueue_fifo(stval+DEPTH+2;
+        enqueue_fifo(i);
         check(stval,0,1);
-        for (i=stval; i <= stval+DEPTH; i++) begin
+        // now remove DEPTH-1 items
+        for (i=stval; i < stval+DEPTH-1; i++) begin
             dequeue_fifo;
-            if (i<stval+DEPTH) check(i+1,0,0);
-            else check_empty(1);
+            check(i+1,0,0);
         end
+        dequeue_fifo;  // remove last item
+        check_empty(1);
     endtask: overfill_and_empty
 
     task overempty;
-        $dipslay("testcase: overempty");
+        $display("testcase: overempty");
         while (!empty) dequeue_fifo;  // makesure it's empty
         dequeue_fifo;
+        check_empty(1);
         dequeue_fifo;
+        check_empty(1);
         fill_and_empty;  // make sure it still works
     endtask: overempty
 
@@ -151,8 +157,8 @@ module fifo_xb_tb
     // item before dequeuing everything
     task mixed_enqueue_dequeue;
         int i;
-        int stval = 8'h71;
-        int lastval = stval + DEPTH/2 + 1;
+        automatic int stval = 8'h71;
+        automatic int lastval = stval + DEPTH/2 + 1;
         $display("testcase: mixed_enqueue_dequeue");
         while (!empty) dequeue_fifo;  // make sure it's empty
         for (i=stval; i<stval+DEPTH/2; i++) begin
@@ -185,4 +191,4 @@ module fifo_xb_tb
         report_errors;
         $stop;
     end
-endmodule: fifo_xb_tb
+endmodule: fifo_tb

@@ -26,7 +26,7 @@ module fifo_xb_top;
               (.clk, .rst, .enqueue, .dequeue,
                   .din, .dout, .full, .empty);
 
-    fifo_xb_tb #(.CLKPD(CLKPD), .WIDTH(WIDTH), .DEPTH(DEPTH)) TB
+    fifo_tb #(.CLKPD(CLKPD), .WIDTH(WIDTH), .DEPTH(DEPTH)) TB
                    (.clk, .rst, .enqueue, .dequeue,
                     .din, .dout, .full, .empty);;
 
