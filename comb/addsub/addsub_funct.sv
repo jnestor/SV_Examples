@@ -5,18 +5,14 @@
 // Author        : John Nestor  <nestorj@lafayette.edu>
 // Created       : Feb 2020
 //-----------------------------------------------------------------------------
-// Description   : Adder/Subtracter with explicitly shared adder
+// Description   : Adder/Subtracter functional description
 //-----------------------------------------------------------------------------
 
-module addsub_struct #(parameter W=8)
+module addsub_funct #(parameter W=32)
    (input logic [W-1:0] a, b,
     input logic subsel,
     output logic [W-1:0] y);
 
-    logic [W-1:0] bx;
+   assign y = (subsel) ? a - b : a + b;
 
-    bx = (subsel) ? ~b : b;
-
-    assign y = a + bx + sub;
-
-endmodule: adder
+endmodule: addsub_funct

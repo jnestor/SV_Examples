@@ -22,4 +22,4 @@ module mux4 #(parameter W=32)
        default : y = 0;
      endcase
 
-endmodule
+endmodule: mux4

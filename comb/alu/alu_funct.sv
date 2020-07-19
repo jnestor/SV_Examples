@@ -10,7 +10,7 @@
 // Not suitable for synthesis due to poor resource sharing
 //-----------------------------------------------------------------------------
 
-module alu_funct #(parameter W=32])
+module alu_funct #(parameter W=32)
 	              (input logic [2:0]   f,
 		           input logic [W-1:0] a, b,
 		           output logic [31:0] result,
