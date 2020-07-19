@@ -10,12 +10,12 @@
 
 module addsub_struct #(parameter W=8)
    (input logic [W-1:0] a, b,
-    input logic sub,
+    input logic subsel,
     output logic [W-1:0] y);
 
     logic [W-1:0] bx;
 
-    bx = (sub) ? ~b : b;
+    bx = (subsel) ? ~b : b;
 
     assign y = a + bx + sub;
 

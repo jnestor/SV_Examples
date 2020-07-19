@@ -10,9 +10,9 @@
 
 module addsub_funct #(parameter W=8)
    (input logic [W-1:0] a, b,
-    input logic sub,
+    input logic subsel,
     output logic [W-1:0] y);
 
-   assign y = (sub) ? a - b : a + b;
+   assign y = (subsel) ? a - b : a + b;
 
 endmodule: adder
