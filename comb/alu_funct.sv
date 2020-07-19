@@ -5,7 +5,7 @@
 // Author        : John Nestor  <nestorj@lafayette.edu>
 // Created       : Feb 2020
 //-----------------------------------------------------------------------------
-// Description   : Structural description of ALU as described in
+// Description   : Functional description of ALU as described in
 // Harris & Harris DDCA (originally in Patterson & Hennessey CoD).
 // Not suitable for synthesis due to poor resource sharing
 //-----------------------------------------------------------------------------
