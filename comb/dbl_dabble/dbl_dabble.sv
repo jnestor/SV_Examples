@@ -10,7 +10,7 @@ always_comb
         for (int i=0; i<8; i++)
             begin
                 if (ones >= 4'd5) ones = ones + 3;
-                if (tens >= 4'd5) tens = ones + 3;
+                if (tens >= 4'd5) tens = tens + 3;
                 if (hundreds >= 4'd5) hundreds = hundreds + 3;
                 {hundreds, tens, ones, bs} = {hundreds, tens, ones, bs} << 1;
             end
