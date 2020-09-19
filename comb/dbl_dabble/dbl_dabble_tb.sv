@@ -6,6 +6,11 @@ module dbl_dabble_tb;
 
     initial begin
         $timeformat(-9,2," ns");
+        b = 255;
+        #10;
+        b = 123;
+        #10;
+        $stop;
         for (int i=0; i<256; i++) begin
             b = i;
             ones_exp = b % 10;
