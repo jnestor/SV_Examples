@@ -10,11 +10,11 @@ always_comb
         {hundreds, tens, ones} = 12'h0;
         for (int i=1; i<=8; i++)
             begin
-                if ((i >= 3) && (ones >= 4'd5)) begin
+                if ((i > 3) && (ones >= 4'd5)) begin
                     ones = ones + 3;
                     $display("add3o %1d %4b %4b %4b %8b", i, hundreds, tens, ones, bs);
                 end
-                if ((i >= 6) && (tens >= 4'd5)) begin
+                if ((i > 6) && (tens >= 4'd5)) begin
                     tens = tens + 3;
                     $display("add3t %1d %4b %4b %4b %8b", i, hundreds, tens, ones, bs);
                 end
