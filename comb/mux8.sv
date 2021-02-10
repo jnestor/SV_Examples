@@ -9,9 +9,9 @@
 //-----------------------------------------------------------------------------
 
 module mux8 #(parameter W=8)
-	         (input logic d0, d1, d2, d3, d4, d5, d6, d7,
+	         (input logic [W-1:0] d0, d1, d2, d3, d4, d5, d6, d7,
 	          input logic [2:0] sel,
-	          output logic y);
+	          output logic [W-1:0] y);
    always_comb
      case (sel)
        3'd0 : y = d0;
