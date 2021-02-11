@@ -29,4 +29,3 @@ module seven_seg_n(
        default: segs_n = 7'b1111111;
      endcase
 endmodule: seven_seg_n
-+-
