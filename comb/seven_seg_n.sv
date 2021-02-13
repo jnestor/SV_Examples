@@ -11,7 +11,7 @@
 
 module seven_seg_n(
 		 input logic [3:0]  data,
-		 output logic [6:0] segs_n;  // ordered g(6) - a(0)
+		 output logic [6:0] segs_n  // ordered g(6) - a(0)
 		 );
 
    always_comb
@@ -29,4 +29,3 @@ module seven_seg_n(
        default: segs_n = 7'b1111111;
      endcase
 endmodule: seven_seg_n
-+-

@@ -8,9 +8,10 @@
 // Description   : Basic binary counter with enable & sync. reset
 //-----------------------------------------------------------------------------
 
-module  counter (#parameter W=4)
-                (input logic clk, rst, enb,
-                 output logic [W-1:0] q);
+module  counter #(parameter W=4) (
+    input logic clk, rst, enb,
+    output logic [W-1:0] q
+    );
 
     always_ff @(posedge clk)
         if (rst)      q <= '0;
