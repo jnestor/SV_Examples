@@ -6,9 +6,8 @@
 // Created       : Feb 2020
 //-----------------------------------------------------------------------------
 // Description   : Functional description of ALU as described in
-// Harris & Harris DDCA (derived from Patterson & Hennessey CoD).
-// Not suitable for synthesis due to poor resource sharing between
-// addition, subtraction, and SLT operations
+// in Patterson & Hennessey CoD.
+// Not suitable for synthesis due to poor resource sharing
 //-----------------------------------------------------------------------------
 
 module alu_funct #(parameter W=32) (
@@ -20,12 +19,10 @@ module alu_funct #(parameter W=32) (
 
     always_comb begin
 	    case (f)
-	        3'b000 : result = a & b;
-	        3'b001 : result = a | b;
-	        3'b010 : result = a + b;
-            3'b100 : result = a & ~b;
-            3'b101 : result = a | ~b;
-	        3'b110 : result = a - b;
+	        3'b000 : result = a & b; // AND
+	        3'b001 : result = a | b; // OR
+	        3'b010 : result = a + b; // ADD
+	        3'b110 : result = a - b; // SUBTRACT
 	        3'b111 : if (a < b) result = { {(W-1){1'b0}}, 1'b1 };
                      else result = '0; //SLT
 	        default : result = '0;

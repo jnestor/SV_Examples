@@ -10,9 +10,12 @@
 // Uses a single adder with added subtraction logic
 //-----------------------------------------------------------------------------
 
-module alu_struct #(parameter W=32)
-                   (input logic [2:0] f, input logic [W-1:0] a, b,
-                    output logic  [W-1:0] result, output logic zero);
+module alu_struct #(parameter W=32) (
+    input logic [2:0] f,
+    input logic [W-1:0] a, b,
+    output logic  [W-1:0] result,
+    output logic zero
+    );
 
    logic [W-1:0] bx, bx_and, bx_or, s, slt_result;
 
