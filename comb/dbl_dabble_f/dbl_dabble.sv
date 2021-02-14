@@ -1,5 +1,7 @@
-module dbl_dabble(input logic [7:0] b,
-                  output logic [3:0] hundreds, tens, ones);
+module dbl_dabble(
+    input logic [7:0] b,
+    output logic [3:0] hundreds, tens, ones
+    );
 
 logic [7:0] bs;
 
