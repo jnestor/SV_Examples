@@ -1,3 +1,17 @@
+//-----------------------------------------------------------------------------
+// Module Name   : dbl_dabble - binary-bcd converter (outpus 3 bcd digits)
+// Project       : RTL Hardware Design and Verification using SystemVerilog
+//-----------------------------------------------------------------------------
+// Author        : John Nestor  <nestorj@lafayette.edu>
+// Created       : Feb 2021
+//-----------------------------------------------------------------------------
+// Description   : Functional description of an extended binary-bcd
+//  converter using the double-dabble algorithm implemented in combinational
+// logic.  This version converts an 8-bit input to three bcd digits output
+// The $display functions illustrate how the algorithm functions
+// but are ignored during synthesis
+//-----------------------------------------------------------------------------
+
 module dbl_dabble(
     input logic [7:0] b,
     output logic [3:0] hundreds, tens, ones
