@@ -10,7 +10,7 @@
 
 module sh_reg #(parameter W=8)
                 (input logic clk, rst, shen, lden, s_in,
-                 input logic [W-1:0]  d;
+                 input logic [W-1:0]  d,
                  output logic [W-1:0] q);
 
   always_ff @(posedge clk)
