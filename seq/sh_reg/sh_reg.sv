@@ -8,10 +8,11 @@
 // Description   : Shift register with parallel load parameterized by bitwidth
 //-----------------------------------------------------------------------------
 
-module sh_reg #(parameter W=8)
-                (input logic clk, rst, shen, lden, s_in,
-                 input logic [W-1:0]  d,
-                 output logic [W-1:0] q);
+module sh_reg #(parameter W=8) (
+    input logic clk, rst, shen, lden, s_in,
+    input logic [W-1:0]  d,
+    output logic [W-1:0] q
+    );
 
   always_ff @(posedge clk)
     if (rst) q <= '0;

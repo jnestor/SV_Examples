@@ -8,10 +8,11 @@
 // Description   : 4-bit shift register with parallel load
 //-----------------------------------------------------------------------------
 
-module sh_reg4 (input logic clk, rst, shen
-                lden, s_in,
-                input logic [3:0]  d,
-                output logic [3:0] q);
+module sh_reg4 (
+    input logic clk, rst, shen, lden, s_in,
+    input logic [3:0]  d,
+    output logic [3:0] q
+    );
 
   always_ff @(posedge clk)
     if (rst) q <= 4'd0;
