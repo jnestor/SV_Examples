@@ -1,10 +1,11 @@
 // self-checking testbench for ripple counter
 
-module counter_rc_sctb #(parameter CLKPD=100)
-        (input logic clk,
-         output logic rst, enb,
-         input logic [3:0] q,
-         input logic       cy);
+module counter_rc_sctb #(parameter CLKPD=100) (
+    input logic       clk,
+    output logic      rst, enb,
+    input logic [3:0] q,
+    input logic       cy
+    );
 
     int errcount = 0;
 
