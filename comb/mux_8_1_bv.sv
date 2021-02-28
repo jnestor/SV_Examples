@@ -1,25 +1,19 @@
 //-----------------------------------------------------------------------------
-// Module Name   : mux4_1hot
+// Module Name   : mux8_1_bv
 // Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
 // Author        : John Nestor  <nestorj@lafayette.edu>
 // Created       : Feb 2020
 //-----------------------------------------------------------------------------
-// Description   : 4-1 mux parameterized by bitwidthw W with 1-hot select
+// Description   : 8-1 mux with bit vector input using indexing
 //-----------------------------------------------------------------------------
 
-module mux4_1hot #(parameter W=4)
-             (input logic [W-1:0]  d0, d1, d2, d3,
-              input logic [3:0]    sel,
-              output logic [W-1:0] y );
+module mux8_1_bv (
+    input logic [7:0] d,
+    input logic [2:0] sel,
+    output logic y
+    );
 
-   always_comb
-     unique case (sel)
-       4'd0001 : y = d0;
-       4'd0010 : y = d1;
-       4'd0100 : y = d2;
-       4'd1000 : y = d3;
-       // default : y = 0;
-     endcase
+    assign y = d[sel];
 
-endmodule: mux4_1hot
+endmodule: mux8_1_bv

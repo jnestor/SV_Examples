@@ -1,16 +1,15 @@
 module fifo_xb_tb
-  #(parameter CLKPD=10, WIDTH=8, DEPTH=4)
-   (output logic clk, rst,
-    output logic enqueue, dequeue,
-    output logic [WIDTH-1:0] din,
-    input  logic [WIDTH-1:0] dout,
-    input logic  full, empty);
+  #(parameter CLKPD=10, WIDTH=8, DEPTH=4) (
+   input clk,
+   output logic rst, enqueue, dequeue,
+   output logic [WIDTH-1:0] din,
+   input  logic [WIDTH-1:0] dout,
+   input logic  full, empty
+   );
 
-    int errcount = 0;
+   int errcount = 0;
 
     task check_empty(input logic exp_empty);
-        $display("%t expected empty=%b actual %b",
-                 $time, exp_empty, empty);
         if (empty !== exp_empty) begin
             $display("%t error expected empty=%b actual %b",
                      $time, exp_empty, empty);
@@ -150,7 +149,7 @@ module fifo_xb_tb
         check_empty(1);
         @(posedge clk) #1;
         // try simultaneous enqueue/dequeue on an empty FIFO
-        enqueue_dequeue_FIFO(8'h71);
+        enqueue_dequeue_fifo(8'h71);
         check(8'h71, 0, 0);
         dequeue_fifo();
         check_empty(1);
