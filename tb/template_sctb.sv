@@ -11,6 +11,8 @@
 
 module template_sctb ( input logic clk, rst /* , add connections */  );
 
+    parameter CLOCK_PD = 10;  // clock period in nanoseconds
+
     int errcount = 0;
 
     // tasks for common functions including checking

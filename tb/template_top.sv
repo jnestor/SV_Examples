@@ -10,6 +10,8 @@
 
 module template_top;
 
+    timeunit 1ns / 100ps;
+
     logic clk, rst;
     // add signals to connect testbench to DUV
 
