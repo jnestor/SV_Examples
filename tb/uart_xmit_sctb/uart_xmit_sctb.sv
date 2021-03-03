@@ -23,10 +23,15 @@ module uart_xmit_sctb (
 
     // tasks for common functions including checking
 
-    task check( exp_txd, txd );
+    task check( txd, exp_txd, rdy, exp_rdy );
         if (txd != exp_txd) begin
              $display("%t error: expected txd=%h actual txd=%h",
                       $time, exp_txd, txd);
+             errcount++;
+        end
+        if (rdy != exp_rdy) begin
+            $display("%t error: expected rdy=%h actual rdy=%h",
+                     $time, exp_rdy, rdy);
              errcount++;
         end
         // place additional tests here
@@ -43,6 +48,7 @@ module uart_xmit_sctb (
         rst = 1;
         @(posedge clk) #1;
         rst = 0;
+        check(txd, 1, rdy, 1);
     endtask: reset_duv
 
     task transmit(logic [7:0] d);
@@ -59,13 +65,13 @@ module uart_xmit_sctb (
         valid = 0;
         wait(txd == 0);  // falling edge of start bit_range
         # (BITPD_NS/2);  // delay to middle of bit period
-        check(txd, 0);
+        check(txd, 0, rdy, 0);
         for (int i=0; i <= 7; i++) begin
             # (BITPD_NS);
-            check(txd, d[i]);
+            check(txd, d[i], rdy, 0);
         end
         # (BITPD_NS);
-        check(txd, 1); // check stop bit
+        check(txd, 1, rdy, 0); // check stop bit
     endtask
 
     // place additional transaction tasks here
@@ -79,6 +85,7 @@ module uart_xmit_sctb (
         transmit(8'h55);
         transmit(8'h47);
         # (BITPD_NS*3);  // just wait a little while...
+        check(txd, 1, rdy, 1);
         transmit(8'h00);
         report_errors;
         $stop;  // suspend simulation (use $finish to exit)
