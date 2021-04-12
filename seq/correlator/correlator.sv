@@ -26,16 +26,16 @@ module correlator #(
     output logic 	     h_out,
     output logic 	     l_out
     );
- 
+
    logic [LEN-1:0] 		   shreg, matchv;
    logic [W-1:0] csum_c;
-   
+
    function [W-1:0] countones ( input logic [LEN-1:0] v );
        logic [W-1:0] count;
        count = 0;
        for (int i=0; i < LEN; i++)
            count = count + v[i];
-       return count;  
+       return count;
    endfunction
 
 
@@ -45,9 +45,9 @@ module correlator #(
         if (rst) shreg <= '0;
         else if (enb) shreg <= { shreg[LEN-2:0], d_in };
      end
-    
-    
-    // register status outputs but don't wait for enb to change 
+
+
+    // register status outputs but don't wait for enb to change
     always_ff @(posedge clk) begin
         if (rst) begin
             csum <= '0;
@@ -57,13 +57,12 @@ module correlator #(
          else begin
              csum <= csum_c;
              h_out <= (csum_c >= HTHRESH);
-             l_out <= (csum <= LTHRESH);         
-         end 
-      end 
+             l_out <= (csum_c <= LTHRESH);         
+         end
+      end
 
    assign csum_c = countones(matchv);
 
    assign matchv = shreg ^~ PATTERN;
 
 endmodule
-
