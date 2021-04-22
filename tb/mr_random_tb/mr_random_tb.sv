@@ -1,7 +1,7 @@
 module mr_random_tb (
     input clk,
     output logic rst, txd,
-    input logic cardet, valid, eof, error,
+    input logic cardet, valid, error,
     input logic [7:0] data
     );
 
@@ -14,6 +14,8 @@ module mr_random_tb (
     parameter ERROR_RATE_PPM = 100; // error rate per million clock cycles
 
     // tasks for common functions including checking
+
+
 
     int errcount = 0;
 
@@ -278,6 +280,7 @@ module mr_random_tb (
         end
         send_noise(10);
         report_errors();
+
         $stop;  // remove to enable functional coverage reporting
         $finish;
     end

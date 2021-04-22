@@ -20,16 +20,16 @@ module mr_random_top;
 
     logic clk, rst, rxd;
     logic [7:0] data;
-    logic cardet, valid, eof, error;
+    logic cardet, valid, error;
 
     clk_gen #(.CLKPD(CLKPD_NS)) CG (.clk);
 
     mr_random_tb  #(.CLKPD_NS(CLKPD_NS),.BIT_RATE(BIT_RATE)) BENCH (
-        .clk, .rst, .txd(rxd), .cardet, .data, .valid, .eof, .error
+        .clk, .rst, .txd(rxd), .cardet, .data, .valid, .error
     );
 
    mx_rcvr #(.BIT_RATE(BIT_RATE)) DUV (
-        .clk, .rst, .rxd, .cardet, .data, .valid, .eof, .error
+        .clk, .rst, .rxd, .cardet, .data, .valid, .error
     );
 
 endmodule: mr_random_top
