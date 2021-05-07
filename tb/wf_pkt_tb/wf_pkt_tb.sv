@@ -24,7 +24,7 @@ module wf_pkt_tb (
     parameter CLKPD_NS = 10;
     parameter BIT_RATE = 50_000;
     localparam BITPD_NS = 1_000_000_000 / BIT_RATE;  // bit period in ns
-    
+
     parameter MAC = "N";
     assign mac = MAC;
 
@@ -63,6 +63,10 @@ module wf_pkt_tb (
     	8'h74, 8'h2a, 8'hc8, 8'h96, 8'h15, 8'h4b, 8'ha9, 8'hf7,
     	8'hb6, 8'he8, 8'h0a, 8'h54, 8'hd7, 8'h89, 8'h6b, 8'h35
     };
+
+    function logic [7:0] update_crc(input logic [7:0] crc, new_byte);
+        return crc_array[crc ^ new_byte];
+    endfunction
 
     int errcount = 0;
 
@@ -154,13 +158,16 @@ module wf_pkt_tb (
                 $fatal(1, "mxframe: randomize failed!");
             end
             crc = 0;
-            crc = crc_array[dst];
-            crc = crc_array[src];
-            crc = crc_array[pkt_type];
+            crc = update_crc(crc, dst);
+            crc = update_crc(crc, src);
+            crc = update_crc(crc, pkt_type);
             data = new[data_len];
             for (int i=0; i<data_len; i++) begin
                 data[i] = $urandom;
-                crc = crc_array[data[i]];
+                crc = update_crc(crc, data[i]);
+            end
+            if (err_type == CRC_ERROR) begin  // inject error - flip some bits
+                crc = crc ^ ($urandom_range(255,1));
             end
             old_rerrcnt = 0;
         endfunction
@@ -177,9 +184,9 @@ module wf_pkt_tb (
             for (int i=0; i < data.size()-1; i++) begin  // send all but the last byte
                 send_byte(data[i]);
             end
-            if (pkt_type inside {[1:3]}) send_byte(crc);
+            if (pkt_type inside {["1":"3"]}) send_byte(crc);
             send_eof(2);
-            send_noise(30);
+            send_noise(noise_len);
         endtask: send_pkt_mx
 
         // receive and check a packet from a WimpFi rcvr

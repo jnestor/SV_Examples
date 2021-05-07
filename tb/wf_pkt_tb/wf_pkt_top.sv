@@ -25,7 +25,7 @@ module wf_pkt_top;
     clk_gen #(.CLKPD(CLKPD_NS)) CG (.clk);
 
     wf_pkt_tb  #(.CLKPD_NS(CLKPD_NS),.BIT_RATE(BIT_RATE)) BENCH (
-        .clk, .rst, .txd, .cardet, .rdata, .rvalid, .rerrcnt
+        .clk, .rst, .txd, .mac, .cardet, .rdata, .rvalid, .rerrcnt
     );
 
     // add your WimpFi receiver here

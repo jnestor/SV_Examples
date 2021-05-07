@@ -20,7 +20,7 @@ module crc(input logic clk, rst, d,
 
    always_ff @(posedge clk)
      begin
-	if (rst) x <= 8'd0;
+	if (rst) qx <= 8'd0;
 	else
           begin
              qx[8] <= qx[7];
