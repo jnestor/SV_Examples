@@ -18,25 +18,34 @@
 module crc_bench;
 
     // Inputs
-    logic clk, rst, d;
+logic clk, rst, enb_bit, d;
 
     // Outputs
-    logic [8:1] qx;
-    logic [8:1]  crc; // for saving the value
+    logic [7:0] crc_bit;
+    logic [7:0]  crc_saved; // for saving the value
+    logic enb_lookup;
+    logic [7:0] data_lookup, crc_lookup;
 
     // Instantiate Device Under Verification (DVUV)
-    crc DUV (
+    crc DUV_BIT (
     .clk(clk),
     .rst(rst),
+    .enb(enb_bit),
     .d(d),
-    .qx(x)
+    .crc(crc_bit)
+    );
+
+    crc_lookup DUV_LU (
+        .clk, .rst, .enb(enb_lookup), .data(data_lookup), .crc(crc_lookup)
     );
 
     // apply data bit di to the CRC input for one clock cycle
     task send_bit(input logic di);
         begin
+            enb_bit = 1;
             d = di;
             @(posedge clk) #1;
+            enb_bit = 0;
         end
     endtask
 
@@ -47,8 +56,12 @@ module crc_bench;
         integer 	  i;
 
         begin
-            for (i = 0; i <= 7; i = i+1)
-            send_bit(bi[i]);
+            data_lookup = bi;
+            for (i = 0; i <= 7; i = i+1) begin
+                if (i == 0) enb_lookup = 1;
+                send_bit(bi[i]);
+                enb_lookup = 0;
+            end
         end
     endtask
 
@@ -67,23 +80,19 @@ module crc_bench;
         rst = 0;
         send_byte("a");
         send_byte("b");
-        crc = qx;
-        $display("Sending CRC Code: %x", qx);
-        // apply the CRC.  Sinc3e x[8] is the
-        // leftmost bit, can't use send_byte here
-        send_bit(crc[8]);
-        send_bit(crc[7]);
-        send_bit(crc[6]);
-        send_bit(crc[5]);
-        send_bit(crc[4]);
-        send_bit(crc[3]);
-        send_bit(crc[2]);
-        send_bit(crc[1]);
-        if (x==0) $display("CRC recevived correctly: %x", qx);
-        else $display("CRC recevived incorrectly: %x", qx);
+        send_byte("w");
+        send_byte("0");
+        send_byte("0");
+        send_byte("t");
+        send_byte("!");
+        crc_saved = crc_bit;
+        $display("Sending CRC Code: %x", crc_saved);
+        send_byte(crc_saved);
+        if (crc_bit==0) $display("CRC recevived correctly: %x", crc_saved);
+        else $display("CRC recevived incorrectly: %x", crc_saved);
         d = 0;
         @(posedge clk) #1;
         $stop;
     end
-    
+
 endmodule

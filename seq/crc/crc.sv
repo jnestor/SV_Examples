@@ -11,17 +11,23 @@
 // Source: Dallas/Maxim 1-Wire bus interface
 //-----------------------------------------------------------------------------
 
-module crc(input logic clk, rst, d,
-	   input logic [8:1] qx);
+module crc(input logic clk, rst, enb, d,
+	   output logic [7:0] crc);
 
    logic 		     x0;
 
+   // note bit order reversed from usual to match polynomial coeffecients
+   logic [1:8] qx;
+
    assign 	x0 = qx[8] ^ d;
+
+   // note reversal of bit order crc is ordered [7:0] as usual
+   assign crc = qx;
 
    always_ff @(posedge clk)
      begin
 	if (rst) qx <= 8'd0;
-	else
+	else if (enb)
           begin
              qx[8] <= qx[7];
              qx[7] <= qx[6];
