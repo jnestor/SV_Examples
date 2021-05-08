@@ -7,12 +7,10 @@
 // Last modified : April 2021
 //-----------------------------------------------------------------------------
 // Description :
-// This testbench exercises the reference Dallas/Maxim 1-wire CRC circuit.
-// Currently it applies two bytes to the CRC, and then applies the CRC itself
-// starting with qx[8] and ending with qx[1].  The result of this two-byte message
-// and CRC must be zero.  Note that in this design, q[8] is the LEFTMOST bit
-// of the CRC, while qx[1] is the RIGHTMOST bit.  This is the reverse of the
-// order in which we whould usually like to transmit the CRC.
+// This testbench exercises the reference Dallas/Maxim 1-wire CRC circuits.
+// One implementation uses an LFSR, the other uses a lookup table
+// It calculates the CRC of a sequence of bytes and then applies that CRC
+// to generate a zero result if the CRC has been calculated correctly.
 //-----------------------------------------------------------------------------
 
 module crc_bench;
