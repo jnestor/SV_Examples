@@ -6,11 +6,24 @@
 // Created       : Feb 2020
 //-----------------------------------------------------------------------------
 // Description   : Multiply a by constant (10) by shifting & adding
-//                 (for unsigned numbers)
+//                 (for signed two's complement numbers)
 //-----------------------------------------------------------------------------
 
-module mpy_10 #(parameter W=8) (input logic [W-1:0] a,
-			       output logic [W+4-1:0] y);
-   assign y = (a << 3) + (a << 1);
+module mpy_10_s #(parameter W=8) (
+	input logic signed [W-1:0] a,
+	output logic signed [W+4-1:0] y
+	)
+	;
+   logic [W+3-1:0] ax8;
+   logic [W+1-1:0] ax2;
+   logic sign;
+   logic [W+3-1:0] ax2x;  // extended to match bitwith of ax8
 
-endmodule: mpy_10
+   assign sign = a[W-1];
+
+   assign ax8 = a << 3;
+   assign ax2 = a << 1;
+   assign ax2x = {{2{sign}},ax2}; // sign extend
+   assign y = ax8 + ax2x;
+
+endmodule: mpy_10_s
