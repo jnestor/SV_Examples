@@ -1,5 +1,5 @@
 module black(
-    input logic pl, pr, gl, gr
+    input logic pl, pr, gl, gr,
     output logic po, go
     );
 
