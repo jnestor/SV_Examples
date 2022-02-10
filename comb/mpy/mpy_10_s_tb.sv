@@ -4,8 +4,8 @@ module mpy_10_s_tb;
 
     logic signed [W-1:0] a;
     logic signed [W+4-1:0] y;
-    
-    mpy_10_s #(.W(W)) DUV (.a, .y);
+
+    mpy_10_s2 #(.W(W)) DUV (.a, .y);
 
     initial begin
         $monitor("a=%d, y=%d", a, y);
