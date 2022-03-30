@@ -15,11 +15,13 @@ module dcounter_rc_mod (
     );
 
     parameter MOD = 4'd10;
+    parameter RSTV = 4'd0;
 
-    assign cy = (q == 0) && enb;
+    assign bw = (q == 0) && enb;
 
     always_ff @(posedge clk) begin
-        if (rst || cy) q <= MOD-1;
+        if (rst) q <= RSTV;
+        else if (bw) q <= MOD-1;
         else if (enb) q <= q - 1;
     end
 
