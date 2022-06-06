@@ -1,44 +1,38 @@
 //-----------------------------------------------------------------------------
-// Title         : mem2p_sw_ar 2-port memory
+// Title         : mem_swsr - single port memory w/ synchornos read, write
 // Project       : RTL Hardware Design and Verification using SystemVerilog
 //-----------------------------------------------------------------------------
 // File          : mem2p_sw_ar.sv
 // Author        : John Nestor  <nestorj@nestorj-mbpro-15.home>
-// Created       : 13.02.2020
-// Last modified : 06.06.2022
+// Created       : 06.06.2022
 //-----------------------------------------------------------------------------
 // Description :
-// Two-port memory with a single clock, a synchronous write port
-// and a synchronous read port.  This will synthesize as blocki
+// single-port memory with a single clock, a synchronous write port
+// and a synchronous read port.  This will synthesize as block
 // RAM in a Xilinx FPGA
 //------------------------------------------------------------------------------
-// Modification history :
-// 13.02.2020 : created
-// 06.06.2022 : modified port names to match text
-//-----------------------------------------------------------------------------
 
-module mem2p_sw_sr
+module mem_swsr
     #(parameter W=8, D=128, localparam DW=$clog2(D))
     (
     input logic clk,
-    input logic we1,
-    input logic [DW-1:0] addr1,
-    input logic [W-1:0]  din1,
-    input logic [DW-1:0] addr2,
-    output logic [W-1:0] dout2
+    input logic we,
+    input logic [DW-1:0] addr,
+    input logic [W-1:0]  din,
+    output logic [W-1:0] dout
     );
 
     logic [W-1:0] ram_array [D-1:0];
-    logic [DW-1:0] addr2_r;
+    logic [DW-1:0] addr_r;
 
     always_ff @(posedge clk) begin
-        if (we1) ram_array[addr1] <= din1;
+        if (we) ram_array[addr] <= din;
     end
 
     always_ff @(posedge clk) begin
-        addr2_r <= addr2;
+        addr_r <= addr;
     end
 
-    assign dout2 = ram_array[addr2_r];
+    assign dout = ram_array[addr_r];
 
 endmodule
