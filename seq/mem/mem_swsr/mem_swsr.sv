@@ -7,9 +7,9 @@
 // Created       : 06.06.2022
 //-----------------------------------------------------------------------------
 // Description :
-// single-port memory with a single clock, a synchronous write port
-// and a synchronous read port.  This will synthesize as block
-// RAM in a Xilinx FPGA
+// Single-port memory with a single clock, a synchronous write port
+// and a synchronous read port.  This will infer a
+// "Simple Dual Port" (SDP) Block RAM in a Xilinx FPGA
 //------------------------------------------------------------------------------
 
 module mem_swsr
