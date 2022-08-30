@@ -11,9 +11,6 @@
 // ports.  This will infer a "True Dual Port" (TDP) Block RAM
 // in a Xilinx FPGA.  CAUTION: this module has not yet been tested
 //------------------------------------------------------------------------------
-// Modification history :
-// 04.08/2022 : created
-//-----------------------------------------------------------------------------
 
 module mem2p_swsr_swsr
     #(parameter W=8, D=128, localparam DW=$clog2(D))
