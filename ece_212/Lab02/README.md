@@ -15,6 +15,6 @@ for the extended 7-segment controller that you designed in Lab 1.
 | di[6] | blank (turns of display when blank=1 |
 | di[5] | dp displays decimal point when asserted and blank=0 (active high) |
 | di[4] | dash displays a dash/minus sign when asserted and blank=0 |
-|    d[3:0] | binary value to be displayed as a hexadecimal digit when minus=0 and blank=0 |
+| d[3:0] | binary value to be displayed as a hexadecimal digit when minus=0 and blank=0 with special characters 'A' (4d10), 'P' (4'd11), and F (4'd15) |
 
 ![Seven segment controller block diagram](doc/sevenseg_ctl.png)
